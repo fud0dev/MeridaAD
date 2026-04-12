@@ -1,36 +1,16 @@
 {
-  "response": [
-    {
-      "player": {
-        "name": "Cacharrón",
-        "age": 27,
-        "number": 1,
-        "pos": "Goalkeeper"
-      }
-    },
-    {
-      "player": {
-        "name": "Lancho",
-        "age": 23,
-        "number": 4,
-        "pos": "Defender"
-      }
-    },
-    {
-      "player": {
-        "name": "Martín Solar",
-        "age": 24,
-        "number": 10,
-        "pos": "Midfielder"
-      }
-    },
-    {
-      "player": {
-        "name": "Chiqui",
-        "age": 26,
-        "number": 7,
-        "pos": "Forward"
-      }
-    }
-  ]
+  "get": "players",
+  "parameters": {
+    "team": "2501",
+    "season": "2025"
+  },
+  "errors": {
+    "plan": "Free plans do not have access to this season, try from 2022 to 2024."
+  },
+  "results": 0,
+  "paging": {
+    "current": 1,
+    "total": 1
+  },
+  "response": []
 }
