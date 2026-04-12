@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AD Mérida | Flashscore Clone</title>
+    <title>AD Mérida | Información</title>
+    <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/b/b5/Logo_AD_M%C3%A9rida.svg">
     <!-- Modern Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-body: #0d141e;      /* Flashscore dark background */
@@ -23,7 +24,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
@@ -48,34 +49,20 @@
             border-bottom: 1px solid var(--bg-body);
         }
         
-        .header-logo-bg {
-            background-color: white;
-            padding: 8px;
-            border-radius: 8px;
-            margin-right: 20px;
-        }
-
         .header-logo {
             width: 80px;
             height: 80px;
             object-fit: contain;
+            margin-right: 20px;
         }
 
-        .header-details h1 {
-            font-size: 28px;
+        .header-title h1 {
+            font-size: 24px;
             font-weight: 700;
             margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .header-details h1 span {
-            margin-left: 10px;
-            color: var(--text-secondary);
-            font-size: 20px;
         }
 
-        .header-info {
+        .header-subtitle {
             color: var(--text-secondary);
             font-size: 14px;
         }
@@ -308,27 +295,39 @@
             font-size: 12px;
             font-weight: bold;
             color: white;
+            border-radius: 4px;
         }
 
         .badge-g { background-color: #00a651; } /* WIN */
         .badge-e { background-color: #f7a600; } /* DRAW */
         .badge-p { background-color: #ff3b40; } /* LOSS */
+        
+        .form-badge {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            margin-right: 4px;
+        }
+        
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <div class="header-logo-bg">
-            <img src="https://static.flashscore.com/res/image/data/6Z63QdUH-zNF1SoyR.png" alt="Mérida AD Logo" class="header-logo">
+        <div class="header">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Logo_AD_M%C3%A9rida.svg" alt="Mérida AD Logo" class="header-logo">
+        <div class="header-title">
+            <h1 style="margin: 0; font-size: 24px;">AD Mérida</h1>
+            <div class="header-subtitle">ESPAÑA: Primera Federación - Grupo 2</div>
         </div>
-        <div class="header-details">
-            <h1>AD Mérida <span>☆</span></h1>
-            <div class="header-info">
-                Estadio: <strong>Estadio Romano José Fouto (Mérida)</strong><br>
-                Capacidad: <strong>14 600</strong>
-            </div>
-        </div>
+    </div>
     </div>
 
     <div class="tabs">
@@ -353,7 +352,7 @@
 
         <!-- RESULTADOS TAB -->
         <div id="resultados" class="tab-content">
-            <div class="section-title">🇪🇸 ESPAÑA: Primera Federación - Grupo 1</div>
+            <div class="section-title">🇪🇸 ESPAÑA: Primera Federación - Grupo 2</div>
             <div id="resultados-container"></div>
         </div>
 
@@ -368,10 +367,16 @@
             <div class="section-title">Clasificación General</div>
             <table>
                 <tr class="table-header">
-                    <th width="50">#</th>
-                    <th>Equipo</th>
-                    <th width="50">PTS</th>
-                    <th width="50">DG</th>
+                    <th width="30">#</th>
+                    <th>EQUIPO</th>
+                    <th width="30" style="text-align: center;">PJ</th>
+                    <th width="30" style="text-align: center;">G</th>
+                    <th width="30" style="text-align: center;">E</th>
+                    <th width="30" style="text-align: center;">P</th>
+                    <th width="50" style="text-align: center;">G</th>
+                    <th width="40" style="text-align: center;">DG</th>
+                    <th width="40" style="text-align: center;">PTS</th>
+                    <th width="130" style="text-align: center;">FORMA</th>
                 </tr>
                 <tbody id="clasificacion-table"></tbody>
             </table>
@@ -475,20 +480,44 @@
 
     function renderStandings(data) {
         const tbody = document.getElementById('clasificacion-table');
-        const st = data?.response?.[0]?.league?.standings?.[0];
-        if (!st || st.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" class="empty-state">No hay clasificación</td></tr>`;
+        if (!data || !data.response || data.response.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="10" class="empty-state">No hay datos de clasificación disponibles.</td></tr>`;
             return;
         }
 
-        tbody.innerHTML = st.map(s => `
-            <tr class="table-row" style="${s.team.name.includes('Mérida') ? 'background-color: rgba(255, 59, 64, 0.1);' : ''}">
-                <td>${s.rank}</td>
-                <td class="team-name" style="${s.team.name.includes('Mérida') ? 'font-weight: bold; color: var(--accent-color);' : ''}">${s.team.name}</td>
-                <td style="font-weight:700">${s.points}</td>
-                <td class="date-col">${s.goalsDiff}</td>
+        const standings = data.response[0].league.standings[0];
+        
+        tbody.innerHTML = standings.map((s, index) => {
+            const isMerida = s.team.id === 2501 || s.team.name.includes('Mérida');
+            const stats = s.stats || { pj: "-", g: "-", e: "-", p: "-", goals: "-", diff: s.goalsDiff };
+            const formArr = s.form || [];
+            
+            // Generate form HTML
+            let formHtml = '';
+            formArr.forEach(f => {
+                let badgeClass = 'badge-unk';
+                if (f === 'G') badgeClass = 'badge-g';
+                if (f === 'E') badgeClass = 'badge-e';
+                if (f === 'P') badgeClass = 'badge-p';
+                
+                formHtml += `<div class="form-badge ${badgeClass}" style="${badgeClass === 'badge-unk' ? 'background-color: #555e6b;' : ''}">${f}</div>`;
+            });
+
+            return `
+            <tr class="table-row ${isMerida ? 'fw-bold' : ''}" style="${isMerida ? 'background-color: var(--bg-hover);' : ''}">
+                <td class="date-col">${s.rank}.</td>
+                <td class="team-name" style="${isMerida ? 'color: #fff;' : ''}">${s.team.name}</td>
+                <td style="text-align: center; color: var(--text-secondary);">${stats.pj}</td>
+                <td style="text-align: center; color: var(--text-secondary);">${stats.g}</td>
+                <td style="text-align: center; color: var(--text-secondary);">${stats.e}</td>
+                <td style="text-align: center; color: var(--text-secondary);">${stats.p}</td>
+                <td style="text-align: center; color: var(--text-secondary);">${stats.goals}</td>
+                <td style="text-align: center; color: var(--text-secondary);">${stats.diff}</td>
+                <td style="text-align: center; font-weight: bold; color: #fff;">${s.points}</td>
+                <td style="text-align: center;">${formHtml}</td>
             </tr>
-        `).join('');
+            `;
+        }).join('');
     }
 
     function renderNews(data) {
