@@ -1,0 +1,164 @@
+{
+  "response": [
+    {
+      "dateStr": "12.04. 16:15",
+      "home": "AD Mérida",
+      "away": "Tenerife",
+      "score_home": "1",
+      "score_away": "1",
+      "status": "FT"
+    },
+    {
+      "dateStr": "04.04. 19:00",
+      "home": "Ponferradina",
+      "away": "AD Mérida",
+      "score_home": "4",
+      "score_away": "1",
+      "status": "FT"
+    },
+    {
+      "dateStr": "28.03. 17:30",
+      "home": "AD Mérida",
+      "away": "Racing Club Ferrol",
+      "score_home": "2",
+      "score_away": "1",
+      "status": "FT"
+    },
+    {
+      "dateStr": "20.03. 18:00",
+      "home": "Athletic Club B",
+      "away": "AD Mérida",
+      "score_home": "1",
+      "score_away": "1",
+      "status": "FT"
+    },
+    {
+      "dateStr": "13.03. 18:00",
+      "home": "AD Mérida",
+      "away": "Guadalajara",
+      "score_home": "1",
+      "score_away": "4",
+      "status": "FT"
+    },
+    {
+      "dateStr": "07.03. 20:00",
+      "home": "AD Mérida",
+      "away": "CF Talavera",
+      "score_home": "0",
+      "score_away": "0",
+      "status": "FT"
+    },
+    {
+      "dateStr": "28.02. 15:00",
+      "home": "Celta de Vigo B",
+      "away": "AD Mérida",
+      "score_home": "1",
+      "score_away": "1",
+      "status": "FT"
+    },
+    {
+      "dateStr": "22.02. 15:00",
+      "home": "AD Mérida",
+      "away": "Cacereño",
+      "score_home": "1",
+      "score_away": "0",
+      "status": "FT"
+    },
+    {
+      "dateStr": "14.02. 15:15",
+      "home": "Ourense CF",
+      "away": "AD Mérida",
+      "score_home": "3",
+      "score_away": "1",
+      "status": "FT"
+    },
+    {
+      "dateStr": "08.02. 17:15",
+      "home": "AD Mérida",
+      "away": "Zamora",
+      "score_home": "2",
+      "score_away": "0",
+      "status": "FT"
+    },
+    {
+      "dateStr": "31.01. 20:00",
+      "home": "Real Avilés",
+      "away": "AD Mérida",
+      "score_home": "1",
+      "score_away": "2",
+      "status": "FT"
+    },
+    {
+      "dateStr": "23.01. 20:15",
+      "home": "AD Mérida",
+      "away": "Pontevedra",
+      "score_home": "1",
+      "score_away": "1",
+      "status": "FT"
+    },
+    {
+      "dateStr": "18.01. 17:15",
+      "home": "Real Madrid B",
+      "away": "AD Mérida",
+      "score_home": "1",
+      "score_away": "1",
+      "status": "FT"
+    },
+    {
+      "dateStr": "11.01. 11:00",
+      "home": "AD Mérida",
+      "away": "Osasuna B",
+      "score_home": "1",
+      "score_away": "0",
+      "status": "FT"
+    },
+    {
+      "dateStr": "03.01. 11:00",
+      "home": "Lugo",
+      "away": "AD Mérida",
+      "score_home": "1",
+      "score_away": "0",
+      "status": "FT"
+    },
+    {
+      "dateStr": "19.12.2025",
+      "home": "AD Mérida",
+      "away": "Athletic Club B",
+      "score_home": "2",
+      "score_away": "3",
+      "status": "FT"
+    },
+    {
+      "dateStr": "14.12.2025",
+      "home": "CF Talavera",
+      "away": "AD Mérida",
+      "score_home": "2",
+      "score_away": "1",
+      "status": "FT"
+    },
+    {
+      "dateStr": "07.12.2025",
+      "home": "AD Mérida",
+      "away": "Ourense CF",
+      "score_home": "3",
+      "score_away": "2",
+      "status": "FT"
+    },
+    {
+      "dateStr": "29.11.2025",
+      "home": "Racing Club Ferrol",
+      "away": "AD Mérida",
+      "score_home": "2",
+      "score_away": "2",
+      "status": "FT"
+    },
+    {
+      "dateStr": "22.11.2025",
+      "home": "AD Mérida",
+      "away": "Real Avilés",
+      "score_home": "2",
+      "score_away": "1",
+      "status": "FT"
+    }
+  ]
+}
