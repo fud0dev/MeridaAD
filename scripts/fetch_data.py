@@ -82,57 +82,71 @@ def extract_flashscore_data():
             page.wait_for_timeout(3000)
             rows = page.query_selector_all('.ui-table__row')
             for row in rows:
-                rank_el = row.query_selector('.tableCellRank')
-                name_el = row.query_selector('.tableCellParticipant__name')
-                pts_el = row.query_selector('.table__cell--points')
-                diff_el = row.query_selector('.table__cell--goalsForAgainstDiff')
-                played_el = row.query_selector('.table__cell[title="Partidos jugados"]') 
-                # Flashscore often uses a generic class for columns. Wait, we can get children.
+                rank_el = row.query_selector('.table__cell--rank')
+                name_el = row.query_selector('.tableCellParticipant')
                 
-                if not rank_el or not name_el or not pts_el: continue
+                if not rank_el or not name_el: continue
                 rank_text = rank_el.inner_text().replace('.', '').strip()
                 if not rank_text.isdigit(): continue
                 
                 rank = int(rank_text)
                 name = name_el.inner_text().strip()
-                points = int(pts_el.inner_text().strip())
-                diff = 0
-                if diff_el:
-                    try: diff = int(diff_el.inner_text().replace('+', '').strip())
-                    except: pass
                 
+                # Fetching extended values [PJ, G, E, P, Goals (GF:GA), GoalsDiff, PTS]
+                values = row.query_selector_all('.table__cell--value')
+                stats = [v.inner_text().strip() for v in values]
+                
+                if len(stats) >= 7:
+                    pj = stats[0]
+                    g = stats[1]
+                    e = stats[2]
+                    p = stats[3]
+                    goals = stats[4]
+                    diff = stats[5]
+                    points = stats[6]
+                else:
+                    pj, g, e, p, goals, diff, points = ("0", "0", "0", "0", "0:0", "0", "0")
+                
+                # Form
+                form_els = row.query_selector_all('.tableCellFormIcon')
+                form_arr = [f.inner_text().strip() for f in form_els]
+
                 standings.append({
                     "rank": rank,
                     "team": {"name": name, "id": (2501 if "Mérida" in name else rank)},
-                    "points": points,
-                    "goalsDiff": diff
+                    "points": int(points) if points.isdigit() else 0,
+                    "stats": {
+                        "pj": pj, "g": g, "e": e, "p": p, "goals": goals, "diff": diff
+                    },
+                    "form": form_arr
                 })
 
             # 4. Noticias
             print(f"Scraping Noticias...")
             page.goto(f"{BASE_URL}/noticias/")
             page.wait_for_timeout(3000)
-            news_elements = page.query_selector_all('a.news__item, a[class*="news"]')
-            for el in news_elements[:10]:
-                title_el = el.query_selector('.newsArticle__title, [class*="title"]')
-                source_el = el.query_selector('.newsArticle__source, [class*="source"]')
-                date_el = el.query_selector('.newsArticle__time, [class*="time"]')
-                
-                # Check innerText directly if child missing
-                title = title_el.inner_text().strip() if title_el else el.inner_text().strip()
-                source = source_el.inner_text().strip() if source_el else "Flashscore"
-                date_str = date_el.inner_text().strip() if date_el else ""
-                href = el.get_attribute("href") or "#"
-                if not href.startswith("http"):
-                    href = "https://www.flashscore.es" + href
-                
-                if title:
-                    noticias.append({
-                        "title": title[:100] + "..." if len(title) > 100 else title,
-                        "source": source,
-                        "date": date_str,
-                        "url": href
-                    })
+            
+            # Flashscore classes mutate heavily. Best bet is checking hrefs for /newsfeed/.
+            news_elements = page.query_selector_all('a')
+            valid_news = []
+            for el in news_elements:
+                href = el.get_attribute("href") or ""
+                if '/newsfeed/' in href or 'noticias' in href:
+                    if href not in [n['url'] for n in valid_news]: # deduplicate
+                        text = el.inner_text().strip()
+                        if len(text) > 5 and "\n" not in text:
+                            # Usually the title is inside the inner text directly. 
+                            # If it includes a source, it's separated by newline or span. 
+                            url_full = "https://www.flashscore.es" + href if not href.startswith("htt") else href
+                            valid_news.append({
+                                "title": text[:120] + "..." if len(text) > 120 else text,
+                                "source": "Flashscore",
+                                "date": "Reciente", 
+                                "url": url_full
+                            })
+                            if len(valid_news) >= 10: break
+            
+            noticias.extend(valid_news)
 
             browser.close()
     except Exception as e:
