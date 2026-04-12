@@ -237,6 +237,82 @@
             color: var(--text-secondary);
             padding: 20px;
         }
+
+        /* FLASHSCORE MATCH ROW CLONE */
+        .fs-match-row {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+            font-size: 13px;
+        }
+
+        .fs-match-row:hover {
+            background-color: var(--bg-hover);
+            cursor: pointer;
+        }
+
+        .fs-match-date {
+            width: 70px;
+            color: var(--text-secondary);
+            text-align: center;
+            flex-shrink: 0;
+            margin-right: 15px;
+        }
+
+        .fs-match-teams {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .fs-team {
+            display: flex;
+            align-items: center;
+            color: var(--text-primary);
+        }
+        
+        .fw-bold {
+            font-weight: 700;
+        }
+
+        .fs-match-scores {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            margin-right: 20px;
+        }
+
+        .fs-score {
+            font-weight: 700;
+            color: var(--win-color);
+        }
+
+        .fs-match-badge {
+            width: 24px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .badge {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .badge-g { background-color: #00a651; } /* WIN */
+        .badge-e { background-color: #f7a600; } /* DRAW */
+        .badge-p { background-color: #ff3b40; } /* LOSS */
     </style>
 </head>
 <body>
@@ -269,7 +345,7 @@
         <!-- RESUMEN TAB -->
         <div id="resumen" class="tab-content active">
             <div class="section-title">Últimos Resultados</div>
-            <table id="resumen-table"><tbody></tbody></table>
+            <div id="resumen-container"></div>
         </div>
 
         <!-- NOTICIAS TAB -->
@@ -280,13 +356,13 @@
         <!-- RESULTADOS TAB -->
         <div id="resultados" class="tab-content">
             <div class="section-title">🇪🇸 ESPAÑA: Primera Federación - Grupo 1</div>
-            <table id="resultados-table"><tbody></tbody></table>
+            <div id="resultados-container"></div>
         </div>
 
         <!-- PARTIDOS TAB -->
         <div id="partidos" class="tab-content">
             <div class="section-title">🇪🇸 ESPAÑA: Primera Federación - Grupo 1</div>
-            <table id="partidos-table"><tbody></tbody></table>
+            <div id="partidos-container"></div>
         </div>
 
         <!-- CLASIFICACION TAB -->
@@ -350,9 +426,9 @@
             const transfersData = await (responses[5]?.json() || []);
             const meta = await (responses[6]?.json() || {last_updated: 'Desconocido'});
 
-            renderMatches('resumen-table', resultsData.slice(0, 10)); // Top 10 for resumen
-            renderMatches('resultados-table', resultsData);
-            renderMatches('partidos-table', partidosData);
+            renderMatches('resumen-container', resultsData.slice(0, 10)); // Top 10 for resumen
+            renderMatches('resultados-container', resultsData);
+            renderMatches('partidos-container', partidosData);
             renderStandings(standingsData);
             renderNews(newsData);
             renderSquad(playersData.response || []);
@@ -365,24 +441,56 @@
         }
     }
 
-    function renderMatches(tableId, data) {
-        const tbody = document.getElementById(tableId).querySelector('tbody');
+    function renderMatches(containerId, data) {
+        const container = document.getElementById(containerId);
         if (!data || data.length === 0) {
-            tbody.innerHTML = `<tr><td class="empty-state">No hay partidos disponibles</td></tr>`;
+            container.innerHTML = `<div class="empty-state">No hay partidos disponibles</div>`;
             return;
         }
         
-        tbody.innerHTML = data.map(m => {
-            // Include exactly how Flashscore scraper provides it, which includes the hour
+        container.innerHTML = data.map(m => {
             let formattedDate = m.dateStr || '';
             
+            // Revert injected year if the user wants exact Flashscore literal string, e.g. 04.04. 21:00
+            const parts = formattedDate.split(" ");
+            if (parts.length === 2 && /^\d{2}\.\d{2}\.$/.test(parts[0])) {
+                formattedDate = `${parts[0]} ${parts[1]}`;
+            }
+            
+            let badgeHtml = '<div style="width: 24px;"></div>';
+            if (m.score_home !== '' && m.score_away !== '' && m.score_home !== '-' && m.score_away !== '-') {
+                const sHome = parseInt(m.score_home);
+                const sAway = parseInt(m.score_away);
+                const isMeridaHome = m.home.includes('Mérida');
+                
+                if (sHome === sAway) {
+                    badgeHtml = `<div class="badge badge-e">E</div>`;
+                } else if ((isMeridaHome && sHome > sAway) || (!isMeridaHome && sAway > sHome)) {
+                    badgeHtml = `<div class="badge badge-g">G</div>`;
+                } else {
+                    badgeHtml = `<div class="badge badge-p">P</div>`;
+                }
+            }
+
             return `
-            <tr class="table-row">
-                <td width="90" class="date-col">${formattedDate}</td>
-                <td class="team-name" style="${m.home.includes('Mérida') ? 'color: var(--text-primary); font-weight:700;' : ''}">${m.home}</td>
-                <td class="team-name" style="${m.away.includes('Mérida') ? 'color: var(--text-primary); font-weight:700;' : ''}">${m.away}</td>
-                <td class="score">${m.score_home || '-'} <br> ${m.score_away || '-'}</td>
-            </tr>
+            <div class="fs-match-row">
+                <div class="fs-match-date">${formattedDate}</div>
+                <div class="fs-match-teams">
+                    <div class="fs-team ${m.home.includes('Mérida') ? 'fw-bold' : ''}">
+                        ${m.home}
+                    </div>
+                    <div class="fs-team ${m.away.includes('Mérida') ? 'fw-bold' : ''}">
+                        ${m.away}
+                    </div>
+                </div>
+                <div class="fs-match-scores">
+                    <div class="fs-score">${m.score_home || '-'}</div>
+                    <div class="fs-score">${m.score_away || '-'}</div>
+                </div>
+                <div class="fs-match-badge">
+                    ${badgeHtml}
+                </div>
+            </div>
             `;
         }).join('');
     }
