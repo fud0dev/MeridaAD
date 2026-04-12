@@ -337,7 +337,6 @@
         <div class="tab" onclick="switchTab('resultados', this)">RESULTADOS</div>
         <div class="tab" onclick="switchTab('partidos', this)">PARTIDOS</div>
         <div class="tab" onclick="switchTab('clasificacion', this)">CLASIFICACIÓN</div>
-        <div class="tab" onclick="switchTab('plantilla', this)">PLANTILLA</div>
     </div>
 
     <div class="content">
@@ -377,18 +376,6 @@
                 <tbody id="clasificacion-table"></tbody>
             </table>
         </div>
-
-        <!-- PLANTILLA TAB -->
-        <div id="plantilla" class="tab-content">
-            <div class="section-title">Plantilla 2025/2026</div>
-            <table>
-                <tr class="table-header">
-                    <th>Nombre</th>
-                    <th width="80">Edad</th>
-                </tr>
-                <tbody id="plantilla-table"></tbody>
-            </table>
-        </div>
         
         <div class="sync-status" id="syncStatus">Sincronizando datos...</div>
     </div>
@@ -407,23 +394,21 @@
         try {
             const urls = [
                 'data/resultados.json', 'data/partidos.json', 'data/standings.json',
-                'data/players.json', 'data/news.json', 'data/metadata.json'
+                'data/news.json', 'data/metadata.json'
             ];
             const responses = await Promise.all(urls.map(u => fetch(u).catch(() => null)));
             
             const resultsData = (await (responses[0]?.json() || {response:[]})).response;
             const partidosData = (await (responses[1]?.json() || {response:[]})).response;
             const standingsData = await (responses[2]?.json() || {response:[]});
-            const playersData = await (responses[3]?.json() || {response:[]});
-            const newsData = await (responses[4]?.json() || []);
-            const meta = await (responses[5]?.json() || {last_updated: 'Desconocido'});
+            const newsData = await (responses[3]?.json() || []);
+            const meta = await (responses[4]?.json() || {last_updated: 'Desconocido'});
 
             renderMatches('resumen-container', resultsData.slice(0, 10)); // Top 10 for resumen
             renderMatches('resultados-container', resultsData);
             renderMatches('partidos-container', partidosData);
             renderStandings(standingsData);
             renderNews(newsData);
-            renderSquad(playersData.response || []);
 
             document.getElementById('syncStatus').innerText = "Última sincronización: " + new Date(meta.last_updated).toLocaleString();
         } catch (e) {
@@ -518,43 +503,6 @@
                 <div class="news-title">${n.title}</div>
             </a>
         `).join('');
-    }
-
-    function renderSquad(data) {
-        const tbody = document.getElementById('plantilla-table');
-        if (!data || data.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="2" class="empty-state">No hay datos de plantilla</td></tr>`;
-            return;
-        }
-        
-        // Agrupar por posición
-        const positionOrder = ['Porteros', 'Defensas', 'Centrocampistas', 'Delanteros', 'Entrenador'];
-        const groups = {};
-        positionOrder.forEach(pos => groups[pos] = []);
-        groups['Otros'] = []; // Fallback
-        
-        data.forEach(p => {
-            const pos = p.player.pos || 'Otros';
-            if (groups[pos]) groups[pos].push(p);
-            else groups['Otros'].push(p);
-        });
-
-        let html = '';
-        positionOrder.concat(['Otros']).forEach(pos => {
-            if (groups[pos] && groups[pos].length > 0) {
-                html += `<tr><td colspan="2" style="background-color: var(--bg-hover); color: var(--text-secondary); font-weight: bold; font-size: 12px; padding: 6px 15px; text-transform: uppercase;">${pos}</td></tr>`;
-                groups[pos].forEach(p => {
-                    html += `
-                        <tr class="table-row">
-                            <td class="team-name">${p.player.name}</td>
-                            <td class="date-col">${p.player.age}</td>
-                        </tr>
-                    `;
-                });
-            }
-        });
-        
-        tbody.innerHTML = html;
     }
 
     // Load data on start
