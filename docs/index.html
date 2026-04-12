@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AD Mérida | Información</title>
-    <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/b/b5/Logo_AD_M%C3%A9rida.svg">
+    <link rel="icon" type="image/svg+xml"
+        href="https://upload.wikimedia.org/wikipedia/commons/b/b5/Logo_AD_M%C3%A9rida.svg">
     <!-- Modern Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #0d141e;      /* Flashscore dark background */
-            --bg-header: #020b12;    /* Darker header */
-            --bg-card: #15202b;      /* Primary container bg */
-            --bg-hover: #1e2d3b;     /* Hover state */
-            --text-primary: #ffffff; /* Main text */
-            --text-secondary: #9aa8b8; /* Subtext */
-            --accent-color: #ff3b40; /* Flashscore red accent */
-            --border-color: #2b3947; /* Borders between rows */
-            --win-color: #f7a600;    /* Flashscore win text color / Merida gold */
+            --bg-body: #0d141e;
+            /* Flashscore dark background */
+            --bg-header: #020b12;
+            /* Darker header */
+            --bg-card: #15202b;
+            /* Primary container bg */
+            --bg-hover: #1e2d3b;
+            /* Hover state */
+            --text-primary: #ffffff;
+            /* Main text */
+            --text-secondary: #9aa8b8;
+            /* Subtext */
+            --accent-color: #ff3b40;
+            /* Flashscore red accent */
+            --border-color: #2b3947;
+            /* Borders between rows */
+            --win-color: #f7a600;
+            /* Flashscore win text color / Merida gold */
         }
 
         * {
@@ -48,7 +59,7 @@
             align-items: center;
             border-bottom: 1px solid var(--bg-body);
         }
-        
+
         .header-logo {
             width: 80px;
             height: 80px;
@@ -121,8 +132,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* TABLE STYLES */
@@ -223,7 +241,7 @@
             color: var(--text-secondary);
             font-size: 14px;
         }
-        
+
         .sync-status {
             text-align: center;
             font-size: 12px;
@@ -266,7 +284,7 @@
             align-items: center;
             color: var(--text-primary);
         }
-        
+
         .fw-bold {
             font-weight: 700;
         }
@@ -304,10 +322,22 @@
             border-radius: 4px;
         }
 
-        .badge-g { background-color: #00a651; } /* WIN */
-        .badge-e { background-color: #f7a600; } /* DRAW */
-        .badge-p { background-color: #ff3b40; } /* LOSS */
-        
+        .badge-g {
+            background-color: #00a651;
+        }
+
+        /* WIN */
+        .badge-e {
+            background-color: #f7a600;
+        }
+
+        /* DRAW */
+        .badge-p {
+            background-color: #ff3b40;
+        }
+
+        /* LOSS */
+
         .form-badge {
             display: inline-flex;
             justify-content: center;
@@ -320,8 +350,23 @@
             font-weight: 700;
             margin-right: 4px;
         }
-        
-        
+
+        .team-logo {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            vertical-align: middle;
+            object-fit: contain;
+        }
+
+        .header-logo {
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+            object-fit: contain;
+        }
+
+
         /* MOBILE OPTIMIZATIONS */
         @media (max-width: 768px) {
             .container {
@@ -329,74 +374,88 @@
                 width: 100%;
                 border-radius: 0;
             }
+
             .content {
                 padding: 10px;
             }
+
             .header {
                 padding: 15px;
             }
+
             .header-logo {
                 width: 50px;
                 height: 50px;
                 margin-right: 12px;
             }
+
             .header-title h1 {
                 font-size: 18px;
                 margin: 0;
             }
+
             .header-subtitle {
                 font-size: 11px;
             }
+
             .fs-match-row {
                 padding: 10px 8px;
             }
+
             .fs-match-date {
                 width: 45px;
                 font-size: 10px;
                 margin-right: 8px;
             }
+
             .fs-match-teams {
                 font-size: 12px;
             }
+
             .fs-score {
                 font-size: 12px;
             }
-            .table-header th, .table-row td {
+
+            .table-header th,
+            .table-row td {
                 padding: 8px 6px;
                 font-size: 11px;
             }
-            
+
             /* Sticky columns for classification on mobile */
             .table-responsive table {
-                min-width: 500px; /* Force minimum width to ensure horizontal scroll works as intended */
+                min-width: 500px;
+                /* Force minimum width to ensure horizontal scroll works as intended */
             }
-            
-            .table-responsive .date-col:first-child, 
+
+            .table-responsive .date-col:first-child,
             .table-responsive .team-name {
                 position: sticky;
                 left: 0;
                 background-color: var(--bg-card);
                 z-index: 2;
             }
-            
+
             .table-responsive .date-col:first-child {
                 width: 30px;
             }
-            
+
             .table-responsive .team-name {
                 left: 30px;
-                box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
             }
-            
-            .table-header th:nth-child(1), .table-header th:nth-child(2) {
+
+            .table-header th:nth-child(1),
+            .table-header th:nth-child(2) {
                 position: sticky;
                 left: 0;
                 background-color: var(--bg-hover);
                 z-index: 3;
             }
+
             .table-header th:nth-child(2) {
                 left: 30px;
-                box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
             }
 
             .form-badge {
@@ -409,143 +468,156 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="header">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Logo_AD_M%C3%A9rida.svg" alt="Mérida AD Logo" class="header-logo">
-        <div class="header-title">
-            <h1>AD Mérida</h1>
-            <div class="header-subtitle">Estadio: Estadio Romano José Fouto (Mérida)</div>
-            <div class="header-subtitle">Capacidad: 14.600 personas.</div>
-        </div>
-    </div>
+    <div class="container">
+        <div class="header">
+            <img src="assets/logos/ad-merida.png"
+                onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b5/Logo_AD_M%C3%A9rida.svg'"
+                alt="Mérida AD Logo" class="header-logo">
+            <div class="header-title">
+                <h1>AD Mérida</h1>
+                <div class="header-subtitle">Estadio Romano José Fouto (Mérida)</div>
+                <div class="header-subtitle">14.600 personas.</di>
+                </div>
+            </div>
 
-    <div class="tabs">
-        <div class="tab active" onclick="switchTab('resumen', this)">RESUMEN</div>
-        <div class="tab" onclick="switchTab('noticias', this)">NOTICIAS</div>
-        <div class="tab" onclick="switchTab('resultados', this)">RESULTADOS</div>
-        <div class="tab" onclick="switchTab('partidos', this)">PARTIDOS</div>
-        <div class="tab" onclick="switchTab('clasificacion', this)">CLASIFICACIÓN</div>
-    </div>
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('resumen', this)">RESUMEN</div>
+                <div class="tab" onclick="switchTab('noticias', this)">NOTICIAS</div>
+                <div class="tab" onclick="switchTab('resultados', this)">RESULTADOS</div>
+                <div class="tab" onclick="switchTab('partidos', this)">PARTIDOS</div>
+                <div class="tab" onclick="switchTab('clasificacion', this)">CLASIFICACIÓN</div>
+            </div>
 
-    <div class="content">
-        <!-- RESUMEN TAB -->
-        <div id="resumen" class="tab-content active">
-            <div class="section-title">Últimos Resultados</div>
-            <div id="resumen-container"></div>
-        </div>
+            <div class="content">
+                <!-- RESUMEN TAB -->
+                <div id="resumen" class="tab-content active">
+                    <div class="section-title">Últimos Resultados</div>
+                    <div id="resumen-container"></div>
+                </div>
 
-        <!-- NOTICIAS TAB -->
-        <div id="noticias" class="tab-content">
-            <div id="noticias-list"></div>
-        </div>
+                <!-- NOTICIAS TAB -->
+                <div id="noticias" class="tab-content">
+                    <div id="noticias-list"></div>
+                </div>
 
-        <!-- RESULTADOS TAB -->
-        <div id="resultados" class="tab-content">
-            <div class="section-title">🇪🇸 ESPAÑA: Primera Federación - Grupo 2</div>
-            <div id="resultados-container"></div>
-        </div>
+                <!-- RESULTADOS TAB -->
+                <div id="resultados" class="tab-content">
+                    <div class="section-title">🇪🇸 ESPAÑA: Primera Federación - Grupo 2</div>
+                    <div id="resultados-container"></div>
+                </div>
 
-        <!-- PARTIDOS TAB -->
-        <div id="partidos" class="tab-content">
-            <div class="section-title">Próximos Partidos</div>
-            <div id="partidos-container"></div>
-        </div>
+                <!-- PARTIDOS TAB -->
+                <div id="partidos" class="tab-content">
+                    <div class="section-title">Próximos Partidos</div>
+                    <div id="partidos-container"></div>
+                </div>
 
-        <!-- CLASIFICACION TAB -->
-        <div id="clasificacion" class="tab-content">
-            <div class="section-title">Clasificación General</div>
-            <div class="table-responsive">
-                <table>
-                    <tr class="table-header">
-                        <th width="30">#</th>
-                        <th>EQUIPO</th>
-                        <th width="30" style="text-align: center;">PJ</th>
-                        <th width="30" style="text-align: center;">G</th>
-                        <th width="30" style="text-align: center;">E</th>
-                        <th width="30" style="text-align: center;">P</th>
-                        <th width="50" style="text-align: center;">G</th>
-                        <th width="40" style="text-align: center;">DG</th>
-                        <th width="40" style="text-align: center;">PTS</th>
-                        <th width="130" style="text-align: center;">FORMA</th>
-                    </tr>
-                    <tbody id="clasificacion-table"></tbody>
-                </table>
+                <!-- CLASIFICACION TAB -->
+                <div id="clasificacion" class="tab-content">
+                    <div class="section-title">Clasificación General</div>
+                    <div class="table-responsive">
+                        <table>
+                            <tr class="table-header">
+                                <th width="30">#</th>
+                                <th>EQUIPO</th>
+                                <th width="30" style="text-align: center;">PJ</th>
+                                <th width="30" style="text-align: center;">G</th>
+                                <th width="30" style="text-align: center;">E</th>
+                                <th width="30" style="text-align: center;">P</th>
+                                <th width="50" style="text-align: center;">G</th>
+                                <th width="40" style="text-align: center;">DG</th>
+                                <th width="40" style="text-align: center;">PTS</th>
+                                <th width="130" style="text-align: center;">FORMA</th>
+                            </tr>
+                            <tbody id="clasificacion-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="sync-status" id="syncStatus">Sincronizando datos...</div>
             </div>
         </div>
-        
-        <div class="sync-status" id="syncStatus">Sincronizando datos...</div>
-    </div>
-</div>
 
-<script>
-    function switchTab(tabId, el) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        
-        el.classList.add('active');
-        document.getElementById(tabId).classList.add('active');
-    }
+        <script>
+            function switchTab(tabId, element) {
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                element.classList.add('active');
+            }
 
-    async function loadData() {
-        try {
-            const urls = [
-                'data/resultados.json', 'data/partidos.json', 'data/standings.json',
-                'data/news.json', 'data/metadata.json'
-            ];
-            const responses = await Promise.all(urls.map(u => fetch(u).catch(() => null)));
-            
-            const resultsData = (await (responses[0]?.json() || {response:[]})).response;
-            const partidosData = (await (responses[1]?.json() || {response:[]})).response;
-            const standingsData = await (responses[2]?.json() || {response:[]});
-            const newsData = await (responses[3]?.json() || []);
-            const meta = await (responses[4]?.json() || {last_updated: 'Desconocido'});
+            // Utility to get local logo path from team name
+            function getTeamLogo(name) {
+                if (!name) return '';
+                const slug = name.toLowerCase()
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Remove accents
+                    .replace(/ad /g, 'ad-')
+                    .replace(/ /g, '-')
+                    .replace(/[^a-z0-9-]/g, '');
+                return `assets/logos/${slug}.png`;
+            }
 
-            renderMatches('resumen-container', resultsData.slice(0, 10)); // Top 10 for resumen
-            renderMatches('resultados-container', resultsData);
-            renderMatches('partidos-container', partidosData);
-            renderStandings(standingsData);
-            renderNews(newsData);
+            async function loadData() {
+                try {
+                    const urls = [
+                        'data/resultados.json', 'data/partidos.json', 'data/standings.json',
+                        'data/news.json', 'data/metadata.json'
+                    ];
+                    const responses = await Promise.all(urls.map(u => fetch(u).catch(() => null)));
 
-            document.getElementById('syncStatus').innerText = "Última sincronización: " + new Date(meta.last_updated).toLocaleString();
-        } catch (e) {
-            console.error(e);
-            document.getElementById('syncStatus').innerText = "Error cargando datos. Visualizando caché / diseño base.";
-        }
-    }
+                    const resultsData = (await (responses[0]?.json() || { response: [] })).response;
+                    const partidosData = (await (responses[1]?.json() || { response: [] })).response;
+                    const standingsData = await (responses[2]?.json() || { response: [] });
+                    const newsData = await (responses[3]?.json() || []);
+                    const meta = await (responses[4]?.json() || { last_updated: 'Desconocido' });
 
-    function renderMatches(containerId, data) {
-        const container = document.getElementById(containerId);
-        if (!data || data.length === 0) {
-            container.innerHTML = `<div class="empty-state">No hay partidos disponibles</div>`;
-            return;
-        }
-        
-        container.innerHTML = data.map(m => {
-            let formattedDate = m.dateStr || '';
-            
-            // Apilar fecha y hora como en la captura
-            const dParts = formattedDate.split(" ");
-            const dateTop = dParts[0] || '';
-            const dateBottom = dParts[1] || '';
+                    renderMatches('resumen-container', resultsData.slice(0, 10)); // Top 10 for resumen
+                    renderMatches('resultados-container', resultsData);
+                    renderMatches('partidos-container', partidosData);
+                    renderStandings(standingsData);
+                    renderNews(newsData);
 
-            let badgeHtml = '<div style="width: 24px;"></div>';
-            if (m.score_home !== '' && m.score_away !== '' && m.score_home !== '-' && m.score_away !== '-') {
-                const sHome = parseInt(m.score_home);
-                const sAway = parseInt(m.score_away);
-                const isMeridaHome = m.home.includes('Mérida');
-                
-                if (sHome === sAway) {
-                    badgeHtml = `<div class="badge badge-e"></div>`;
-                } else if ((isMeridaHome && sHome > sAway) || (!isMeridaHome && sAway > sHome)) {
-                    badgeHtml = `<div class="badge badge-g"></div>`;
-                } else {
-                    badgeHtml = `<div class="badge badge-p"></div>`;
+                    document.getElementById('syncStatus').innerText = "Última sincronización: " + new Date(meta.last_updated).toLocaleString();
+                } catch (e) {
+                    console.error(e);
+                    document.getElementById('syncStatus').innerText = "Error cargando datos. Visualizando caché / diseño base.";
                 }
             }
 
-            return `
+            function renderMatches(containerId, data) {
+                const container = document.getElementById(containerId);
+                if (!data || data.length === 0) {
+                    container.innerHTML = `<div class="empty-state">No hay partidos disponibles</div>`;
+                    return;
+                }
+
+                container.innerHTML = data.map(m => {
+                    let formattedDate = m.dateStr || '';
+
+                    // Apilar fecha y hora como en la captura
+                    const dParts = formattedDate.split(" ");
+                    const dateTop = dParts[0] || '';
+                    const dateBottom = dParts[1] || '';
+
+                    let badgeHtml = '<div style="width: 24px;"></div>';
+                    if (m.score_home !== '' && m.score_away !== '' && m.score_home !== '-' && m.score_away !== '-') {
+                        const sHome = parseInt(m.score_home);
+                        const sAway = parseInt(m.score_away);
+                        const isMeridaHome = m.home.includes('Mérida');
+
+                        if (sHome === sAway) {
+                            badgeHtml = `<div class="badge badge-e"></div>`;
+                        } else if ((isMeridaHome && sHome > sAway) || (!isMeridaHome && sAway > sHome)) {
+                            badgeHtml = `<div class="badge badge-g"></div>`;
+                        } else {
+                            badgeHtml = `<div class="badge badge-p"></div>`;
+                        }
+                    }
+
+                    return `
             <div class="fs-match-row">
                 <div class="fs-match-date">
                     <div style="margin-bottom: 4px;">${dateTop}</div>
@@ -553,9 +625,11 @@
                 </div>
                 <div class="fs-match-teams">
                     <div class="fs-team ${m.home.includes('Mérida') ? 'fw-bold' : ''}">
+                        <img class="team-logo" src="${getTeamLogo(m.home)}" onerror="this.style.display='none'">
                         ${m.home}
                     </div>
                     <div class="fs-team ${m.away.includes('Mérida') ? 'fw-bold' : ''}">
+                        <img class="team-logo" src="${getTeamLogo(m.away)}" onerror="this.style.display='none'">
                         ${m.away}
                     </div>
                 </div>
@@ -568,38 +642,41 @@
                 </div>
             </div>
             `;
-        }).join('');
-    }
+                }).join('');
+            }
 
-    function renderStandings(data) {
-        const tbody = document.getElementById('clasificacion-table');
-        if (!data || !data.response || data.response.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="10" class="empty-state">No hay datos de clasificación disponibles.</td></tr>`;
-            return;
-        }
+            function renderStandings(data) {
+                const tbody = document.getElementById('clasificacion-table');
+                if (!data || !data.response || data.response.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="10" class="empty-state">No hay datos de clasificación disponibles.</td></tr>`;
+                    return;
+                }
 
-        const standings = data.response[0].league.standings[0];
-        
-        tbody.innerHTML = standings.map((s, index) => {
-            const isMerida = s.team.id === 2501 || s.team.name.includes('Mérida');
-            const stats = s.stats || { pj: "-", g: "-", e: "-", p: "-", goals: "-", diff: s.goalsDiff };
-            const formArr = s.form || [];
-            
-            // Generate form HTML
-            let formHtml = '';
-            formArr.forEach(f => {
-                let badgeClass = 'badge-unk';
-                if (f === 'G') badgeClass = 'badge-g';
-                if (f === 'E') badgeClass = 'badge-e';
-                if (f === 'P') badgeClass = 'badge-p';
-                
-                formHtml += `<div class="form-badge ${badgeClass}" style="${badgeClass === 'badge-unk' ? 'background-color: #555e6b;' : ''}">${f}</div>`;
-            });
+                const standings = data.response[0].league.standings[0];
 
-            return `
+                tbody.innerHTML = standings.map((s, index) => {
+                    const isMerida = s.team.id === 2501 || s.team.name.includes('Mérida');
+                    const stats = s.stats || { pj: "-", g: "-", e: "-", p: "-", goals: "-", diff: s.goalsDiff };
+                    const formArr = s.form || [];
+
+                    // Generate form HTML
+                    let formHtml = '';
+                    formArr.forEach(f => {
+                        let badgeClass = 'badge-unk';
+                        if (f === 'G') badgeClass = 'badge-g';
+                        if (f === 'E') badgeClass = 'badge-e';
+                        if (f === 'P') badgeClass = 'badge-p';
+
+                        formHtml += `<div class="form-badge ${badgeClass}" style="${badgeClass === 'badge-unk' ? 'background-color: #555e6b;' : ''}">${f}</div>`;
+                    });
+
+                    return `
             <tr class="table-row ${isMerida ? 'fw-bold' : ''}" style="${isMerida ? 'background-color: var(--bg-hover);' : ''}">
                 <td class="date-col">${s.rank}.</td>
-                <td class="team-name" style="${isMerida ? 'color: #fff;' : ''}">${s.team.name}</td>
+                <td class="team-name" style="${isMerida ? 'color: #fff;' : ''}">
+                    <img class="team-logo" src="${getTeamLogo(s.team.name)}" onerror="this.style.display='none'">
+                    ${s.team.name}
+                </td>
                 <td style="text-align: center; color: var(--text-secondary);">${stats.pj}</td>
                 <td style="text-align: center; color: var(--text-secondary);">${stats.g}</td>
                 <td style="text-align: center; color: var(--text-secondary);">${stats.e}</td>
@@ -610,25 +687,26 @@
                 <td style="text-align: center;">${formHtml}</td>
             </tr>
             `;
-        }).join('');
-    }
+                }).join('');
+            }
 
-    function renderNews(data) {
-        const container = document.getElementById('noticias-list');
-        if (!data || data.length === 0) {
-            container.innerHTML = `<div class="empty-state">No hay noticias recientes</div>`;
-            return;
-        }
-        container.innerHTML = data.map(n => `
+            function renderNews(data) {
+                const container = document.getElementById('noticias-list');
+                if (!data || data.length === 0) {
+                    container.innerHTML = `<div class="empty-state">No hay noticias recientes</div>`;
+                    return;
+                }
+                container.innerHTML = data.map(n => `
             <a href="${n.url}" target="_blank" class="news-item">
                 <div class="news-meta">${n.source} • ${n.date}</div>
                 <div class="news-title">${n.title}</div>
             </a>
         `).join('');
-    }
+            }
 
-    // Load data on start
-    document.addEventListener('DOMContentLoaded', loadData);
-</script>
+            // Load data on start
+            document.addEventListener('DOMContentLoaded', loadData);
+        </script>
 </body>
+
 </html>
