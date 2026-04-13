@@ -541,177 +541,188 @@
     </div>
 
     <script>
-        function switchTab(tabId, element) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            element.classList.add('active');
-        }
+    function switchTab(tabId, element) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        element.classList.add('active');
+    }
 
-        const LOGO_MAP = {
-        'tenerife':            'tenerife',
-        'celta de vigo b':     'celta-de-vigo-b',
-        'real madrid b':       'real-madrid-b',
-        'zamora':              'zamora',
-        'pontevedra':          'pontevedra',
-        'barakaldo':           'barakaldo',
-        'ponferradina':        'ponferradina',
-        'unionistas':          'unionistas',
-        'lugo':                'lugo',
-        'ad m\u00e9rida':    'ad-merida',
-        'ad merida':           'ad-merida',
-        'm\u00e9rida':        'ad-merida',
-        'merida':              'ad-merida',
-        'arenas getxo':        'arenas-getxo',
-        'athletic club b':     'athletic-club-b',
-        'racing club ferrol':  'racing-club-ferrol',
-        'real avil\u00e9s':  'real-aviles',
-        'real aviles':         'real-aviles',
-        'ourense cf':          'ourense-cf',
-        'cf talavera':         'cf-talavera',
-        'guadalajara':         'guadalajara',
-        'cacere\u00f1o':     'cacereno',
-        'cacereno':            'cacereno',
-        'osasuna b':           'osasuna-b',
-        'arenteiro':           'arenteiro',
+    const LOGO_MAP = {
+        'tenerife':           'tenerife',
+        'celta de vigo b':    'celta-de-vigo-b',
+        'real madrid b':      'real-madrid-b',
+        'zamora':             'zamora',
+        'pontevedra':         'pontevedra',
+        'barakaldo':          'barakaldo',
+        'ponferradina':       'ponferradina',
+        'unionistas':         'unionistas',
+        'lugo':               'lugo',
+        'ad mérida':     'ad-merida',
+        'ad merida':          'ad-merida',
+        'mérida':        'ad-merida',
+        'merida':             'ad-merida',
+        'arenas getxo':       'arenas-getxo',
+        'athletic club b':    'athletic-club-b',
+        'racing club ferrol': 'racing-club-ferrol',
+        'real avilés':   'real-aviles',
+        'real aviles':        'real-aviles',
+        'ourense cf':         'ourense-cf',
+        'cf talavera':        'cf-talavera',
+        'guadalajara':        'guadalajara',
+        'cacereño':      'cacereno',
+        'cacereno':           'cacereno',
+        'osasuna b':          'osasuna-b',
+        'arenteiro':          'arenteiro',
     };
 
     function getTeamLogo(name) {
         if (!name) return null;
         const key = name.trim().toLowerCase();
         const slug = LOGO_MAP[key];
-        return slug ? `assets/logos/${slug}.png` : null;
+        return slug ? 'assets/logos/' + slug + '.png' : null;
     }
 
     function logoImg(name) {
         const src = getTeamLogo(name);
         if (!src) return '';
-        return `<img src="${src}" width="18" height="18" onerror="this.style.display='none'" style="margin-right:8px;object-fit:contain;vertical-align:middle">`;
+        return '<img src="' + src + '" width="18" height="18" onerror="this.style.display=\'none\'" style="margin-right:8px;object-fit:contain;vertical-align:middle">';
     }
 
     async function loadData() {
-            try {
-                const urls = [
-                    'data/resultados.json', 'data/partidos.json',
-                    'data/standings.json', 'data/news.json', 'data/metadata.json'
-                ];
-                const responses = await Promise.all(urls.map(u => fetch(u).catch(() => null)));
+        try {
+            const urls = [
+                'data/resultados.json', 'data/partidos.json',
+                'data/standings.json', 'data/news.json', 'data/metadata.json'
+            ];
+            const responses = await Promise.all(urls.map(u => fetch(u).catch(() => null)));
 
-                const resultsData = (await (responses[0]?.json() || { response: [] })).response;
-                const partidosData = (await (responses[1]?.json() || { response: [] })).response;
-                const standingsData = await (responses[2]?.json() || { response: [] });
-                const newsData = await (responses[3]?.json() || []);
-                const meta = await (responses[4]?.json() || { last_updated: 'Desconocido' });
+            const resultsData   = (await (responses[0]?.json() || { response: [] })).response;
+            const partidosData  = (await (responses[1]?.json() || { response: [] })).response;
+            const standingsData = await (responses[2]?.json() || { response: [] });
+            const newsData      = await (responses[3]?.json() || []);
+            const meta          = await (responses[4]?.json() || { last_updated: 'Desconocido' });
 
-                renderMatches('resumen-container', resultsData.slice(0, 10));
-                renderMatches('resultados-container', resultsData);
-                renderMatches('partidos-container', partidosData);
-                renderStandings(standingsData);
-                renderNews(newsData);
+            renderMatches('resumen-container',    resultsData.slice(0, 10));
+            renderMatches('resultados-container', resultsData);
+            renderMatches('partidos-container',   partidosData);
+            renderStandings(standingsData);
+            renderNews(newsData);
 
-                document.getElementById('syncStatus').innerText =
-                    'Última sincronización: ' + new Date(meta.last_updated).toLocaleString();
-            } catch (e) {
-                console.error(e);
-                document.getElementById('syncStatus').innerText = 'Error cargando datos.';
-            }
+            document.getElementById('syncStatus').innerText =
+                'Última sincronización: ' + new Date(meta.last_updated).toLocaleString();
+        } catch (e) {
+            console.error(e);
+            document.getElementById('syncStatus').innerText = 'Error cargando datos.';
         }
+    }
 
-        function renderMatches(containerId, data) {
-            const container = document.getElementById(containerId);
-            if (!data || data.length === 0) {
-                container.innerHTML = `<div class="empty-state">No hay partidos disponibles</div>`;
-                return;
-            }
-            container.innerHTML = data.map(m => {
-                const parts = (m.dateStr || '').split(' ');
-                const dateTop = parts[0] || '';
-                const dateBottom = parts[1] || '';
-
-                let badgeHtml = '<div style="width:24px"></div>';
-                if (m.score_home !== '' && m.score_away !== '' && m.score_home !== '-' && m.score_away !== '-') {
-                    const sh = parseInt(m.score_home);
-                    const sa = parseInt(m.score_away);
-                    const home = m.home.includes('Mérida');
-                    if (sh === sa)
-                        badgeHtml = `<div class="badge badge-e"></div>`;
-                    else if ((home && sh > sa) || (!home && sa > sh))
-                        badgeHtml = `<div class="badge badge-g"></div>`;
-                    else
-                        badgeHtml = `<div class="badge badge-p"></div>`;
-                }
-
-                return `<div class="fs-match-row">
-    <div class="fs-match-date">
-        <div style="margin-bottom:4px">${dateTop}</div>
-        <div style="color:var(--text-secondary)">${dateBottom}</div>
-    </div>
-    <div class="fs-match-teams">
-        <div class="fs-team ${m.home.includes('Mérida') ? 'fw-bold' : ''}">
-            ${logoImg(m.home)}
-            ${m.home}
-        </div>
-        <div class="fs-team ${m.away.includes('Mérida') ? 'fw-bold' : ''}">
-            ${logoImg(m.away)}
-            ${m.away}
-        </div>
-    </div>
-    <div class="fs-match-scores">
-        <div class="fs-score">${m.score_home || '-'}</div>
-        <div class="fs-score">${m.score_away || '-'}</div>
-    </div>
-    <div class="fs-match-badge">${badgeHtml}</div>
-</div>`;
-            }).join('');
+    function renderMatches(containerId, data) {
+        const container = document.getElementById(containerId);
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="empty-state">No hay partidos disponibles</div>';
+            return;
         }
+        let html = '';
+        data.forEach(function(m) {
+            const parts = (m.dateStr || '').split(' ');
+            const dateTop    = parts[0] || '';
+            const dateBottom = parts[1] || '';
 
-        function renderStandings(data) {
-            const tbody = document.getElementById('clasificacion-table');
-            if (!data?.response?.length) {
-                tbody.innerHTML = `<tr><td colspan="10" class="empty-state">No hay datos de clasificación.</td></tr>`;
-                return;
+            let badgeHtml = '<div style="width:24px"></div>';
+            if (m.score_home !== '' && m.score_away !== '' && m.score_home !== '-' && m.score_away !== '-') {
+                const sh   = parseInt(m.score_home);
+                const sa   = parseInt(m.score_away);
+                const home = m.home.includes('Mérida') || m.home.includes('Merida');
+                if (sh === sa)
+                    badgeHtml = '<div class="badge badge-e"></div>';
+                else if ((home && sh > sa) || (!home && sa > sh))
+                    badgeHtml = '<div class="badge badge-g"></div>';
+                else
+                    badgeHtml = '<div class="badge badge-p"></div>';
             }
-            const standings = data.response[0].league.standings[0];
-            tbody.innerHTML = standings.map(s => {
-                const isMerida = s.team.id === 2501 || s.team.name.includes('Mérida');
-                const st = s.stats || { pj: '-', g: '-', e: '-', p: '-', goals: '-', diff: s.goalsDiff };
-                const formHtml = (s.form || []).map(f => {
-                    const cls = f === 'G' ? 'badge-g' : f === 'E' ? 'badge-e' : f === 'P' ? 'badge-p' : '';
-                    const bg = cls ? '' : 'background-color:#555e6b;';
-                    return `<div class="form-badge ${cls}" style="${bg}">${f}</div>`;
-                }).join('');
-                return `<tr class="table-row${isMerida ? ' fw-bold' : ''}" style="${isMerida ? 'background-color:var(--bg-hover)' : ''}">
-    <td class="date-col">${s.rank}.</td>
-    <td class="team-name" style="${isMerida ? 'color:#fff' : ''}">
-        ${logoImg(s.team.name)}
-        ${s.team.name}
-    </td>
-    <td style="text-align:center;color:var(--text-secondary)">${st.pj}</td>
-    <td style="text-align:center;color:var(--text-secondary)">${st.g}</td>
-    <td style="text-align:center;color:var(--text-secondary)">${st.e}</td>
-    <td style="text-align:center;color:var(--text-secondary)">${st.p}</td>
-    <td style="text-align:center;color:var(--text-secondary)">${st.goals}</td>
-    <td style="text-align:center;color:var(--text-secondary)">${st.diff}</td>
-    <td style="text-align:center;font-weight:bold;color:#fff">${s.points}</td>
-    <td style="text-align:center"><div style="display:flex;flex-wrap:wrap;gap:2px;justify-content:center">${formHtml}</div></td>
-</tr>`;
-            }).join('');
-        }
 
-        function renderNews(data) {
-            const container = document.getElementById('noticias-list');
-            if (!data || data.length === 0) {
-                container.innerHTML = `<div class="empty-state">No hay noticias recientes</div>`;
-                return;
-            }
-            container.innerHTML = data.map(n => `<a href="${n.url}" target="_blank" class="news-item">
-    <div class="news-meta">${n.source} &bull; ${n.date}</div>
-    <div class="news-title">${n.title}</div>
-</a>`).join('');
-        }
+            const isMeridaHome = m.home.includes('Mérida') || m.home.includes('Merida');
+            const isMeridaAway = m.away.includes('Mérida') || m.away.includes('Merida');
 
-        document.addEventListener('DOMContentLoaded', loadData);
-    </script>
+            html += '<div class="fs-match-row">'
+                + '<div class="fs-match-date">'
+                + '<div style="margin-bottom:4px">' + dateTop + '</div>'
+                + '<div style="color:var(--text-secondary)">' + dateBottom + '</div>'
+                + '</div>'
+                + '<div class="fs-match-teams">'
+                + '<div class="fs-team' + (isMeridaHome ? ' fw-bold' : '') + '">'
+                + logoImg(m.home)
+                + m.home
+                + '</div>'
+                + '<div class="fs-team' + (isMeridaAway ? ' fw-bold' : '') + '">'
+                + logoImg(m.away)
+                + m.away
+                + '</div>'
+                + '</div>'
+                + '<div class="fs-match-scores">'
+                + '<div class="fs-score">' + (m.score_home || '-') + '</div>'
+                + '<div class="fs-score">' + (m.score_away || '-') + '</div>'
+                + '</div>'
+                + '<div class="fs-match-badge">' + badgeHtml + '</div>'
+                + '</div>';
+        });
+        container.innerHTML = html;
+    }
+
+    function renderStandings(data) {
+        const tbody = document.getElementById('clasificacion-table');
+        if (!data || !data.response || !data.response.length) {
+            tbody.innerHTML = '<tr><td colspan="10" class="empty-state">No hay datos de clasificación.</td></tr>';
+            return;
+        }
+        const standings = data.response[0].league.standings[0];
+        let rows = '';
+        standings.forEach(function(s) {
+            const isMerida = s.team.id === 2501 || s.team.name.includes('Mérida') || s.team.name.includes('Merida');
+            const st = s.stats || { pj: '-', g: '-', e: '-', p: '-', goals: '-', diff: s.goalsDiff };
+            let formHtml = '';
+            (s.form || []).forEach(function(f) {
+                const cls = f === 'G' ? 'badge-g' : f === 'E' ? 'badge-e' : f === 'P' ? 'badge-p' : '';
+                const bg  = cls ? '' : 'background-color:#555e6b;';
+                formHtml += '<div class="form-badge ' + cls + '" style="' + bg + '">' + f + '</div>';
+            });
+            rows += '<tr class="table-row' + (isMerida ? ' fw-bold' : '') + '" style="' + (isMerida ? 'background-color:var(--bg-hover)' : '') + '">'
+                + '<td class="date-col">' + s.rank + '.</td>'
+                + '<td class="team-name" style="' + (isMerida ? 'color:#fff' : '') + '">'
+                + logoImg(s.team.name)
+                + s.team.name
+                + '</td>'
+                + '<td style="text-align:center;color:var(--text-secondary)">' + st.pj + '</td>'
+                + '<td style="text-align:center;color:var(--text-secondary)">' + st.g + '</td>'
+                + '<td style="text-align:center;color:var(--text-secondary)">' + st.e + '</td>'
+                + '<td style="text-align:center;color:var(--text-secondary)">' + st.p + '</td>'
+                + '<td style="text-align:center;color:var(--text-secondary)">' + st.goals + '</td>'
+                + '<td style="text-align:center;color:var(--text-secondary)">' + st.diff + '</td>'
+                + '<td style="text-align:center;font-weight:bold;color:#fff">' + s.points + '</td>'
+                + '<td style="text-align:center"><div style="display:flex;flex-wrap:wrap;gap:2px;justify-content:center">' + formHtml + '</div></td>'
+                + '</tr>';
+        });
+        tbody.innerHTML = rows;
+    }
+
+    function renderNews(data) {
+        const container = document.getElementById('noticias-list');
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="empty-state">No hay noticias recientes</div>';
+            return;
+        }
+        let html = '';
+        data.forEach(function(n) {
+            html += '<a href="' + n.url + '" target="_blank" class="news-item">'
+                + '<div class="news-meta">' + n.source + ' &bull; ' + n.date + '</div>'
+                + '<div class="news-title">' + n.title + '</div>'
+                + '</a>';
+        });
+        container.innerHTML = html;
+    }
+
+    document.addEventListener('DOMContentLoaded', loadData);
+</script>
 </body>
-
 </html>
