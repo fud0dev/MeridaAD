@@ -281,7 +281,7 @@
         }
 
         .match-box {
-            background-color: rgba(0, 0, 0, 0.25);
+            background-color: rgba(0, 0, 0, 0.55);
             border-radius: 4px;
             display: flex;
             flex-direction: column;
@@ -293,13 +293,13 @@
         }
 
         .fs-match-date {
-            width: 85px;
+            width: 70px;
             color: rgba(255, 255, 255, 0.95);
             align-items: center;
             flex-shrink: 0;
             font-weight: 600;
-            font-size: 15px;
-            letter-spacing: 1px;
+            font-size: 13px;
+            letter-spacing: 0.5px;
             text-align: center;
         }
 
@@ -428,9 +428,9 @@
             }
 
             .fs-match-date {
-                width: 55px;
-                font-size: 11px;
-                letter-spacing: 0.5px;
+                width: 45px;
+                font-size: 10px;
+                letter-spacing: 0;
             }
 
             .fs-match-teams {
@@ -513,32 +513,26 @@
         </div>
 
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('resumen', this)">RESUMEN</div>
-            <div class="tab" onclick="switchTab('noticias', this)">NOTICIAS</div>
-            <div class="tab" onclick="switchTab('resultados', this)">RESULTADOS</div>
-            <div class="tab" onclick="switchTab('partidos', this)">PARTIDOS</div>
+            <div class="tab active" onclick="switchTab('resultados', this)">ÚLTIMOS RESULTADOS</div>
+            <div class="tab" onclick="switchTab('partidos', this)">PRÓXIMOS PARTIDOS</div>
             <div class="tab" onclick="switchTab('clasificacion', this)">CLASIFICACIÓN</div>
+            <div class="tab" onclick="switchTab('noticias', this)">NOTICIAS</div>
         </div>
 
         <div class="content">
 
-            <div id="resumen" class="tab-content active">
+            <div id="resultados" class="tab-content active">
                 <div class="section-title">Últimos Resultados</div>
-                <div id="resumen-container"></div>
-            </div>
-
-            <div id="noticias" class="tab-content">
-                <div id="noticias-list"></div>
-            </div>
-
-            <div id="resultados" class="tab-content">
-                <div class="section-title">🇪🇸 ESPAÑA: Primera Federación - Grupo 2</div>
                 <div id="resultados-container"></div>
             </div>
 
             <div id="partidos" class="tab-content">
                 <div class="section-title">Próximos Partidos</div>
                 <div id="partidos-container"></div>
+            </div>
+
+            <div id="noticias" class="tab-content">
+                <div id="noticias-list"></div>
             </div>
 
             <div id="clasificacion" class="tab-content">
@@ -631,7 +625,6 @@
             const newsData      = await (responses[3]?.json() || []);
             const meta          = await (responses[4]?.json() || { last_updated: 'Desconocido' });
 
-            renderMatches('resumen-container',    resultsData.slice(0, 10));
             renderMatches('resultados-container', resultsData);
             renderMatches('partidos-container',   partidosData);
             renderStandings(standingsData);
@@ -654,7 +647,11 @@
         let html = '';
         data.forEach(function(m) {
             const parts = (m.dateStr || '').split(' ');
-            const dateTop    = parts[0] || '';
+            let dateTop = parts[0] || '';
+            const dateSegments = dateTop.split('.');
+            if (dateSegments.length >= 2) {
+                dateTop = dateSegments[0] + '/' + dateSegments[1];
+            }
 
             let resultClass = 'match-default';
             if (m.score_home !== '' && m.score_away !== '' && m.score_home !== '-' && m.score_away !== '-') {
