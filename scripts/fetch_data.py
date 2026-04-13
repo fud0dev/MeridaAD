@@ -16,7 +16,6 @@ def extract_flashscore_data():
     resultados = []
     partidos = []
     standings = []
-    noticias = []
     
     try:
         with sync_playwright() as p:
@@ -121,38 +120,13 @@ def extract_flashscore_data():
                     "form": form_arr
                 })
 
-            # 4. Noticias
-            print(f"Scraping Noticias...")
-            page.goto(f"{BASE_URL}/noticias/")
-            page.wait_for_timeout(3000)
-            
-            # Flashscore classes mutate heavily. Best bet is checking hrefs for /newsfeed/.
-            news_elements = page.query_selector_all('a')
-            valid_news = []
-            for el in news_elements:
-                href = el.get_attribute("href") or ""
-                if '/newsfeed/' in href or 'noticias' in href:
-                    if href not in [n['url'] for n in valid_news]: # deduplicate
-                        text = el.inner_text().strip()
-                        if len(text) > 5 and "\n" not in text:
-                            # Usually the title is inside the inner text directly. 
-                            # If it includes a source, it's separated by newline or span. 
-                            url_full = "https://www.flashscore.es" + href if not href.startswith("htt") else href
-                            valid_news.append({
-                                "title": text[:120] + "..." if len(text) > 120 else text,
-                                "source": "Flashscore",
-                                "date": "Reciente", 
-                                "url": url_full
-                            })
-                            if len(valid_news) >= 10: break
-            
-            noticias.extend(valid_news)
+
 
             browser.close()
     except Exception as e:
         print(f"Error scraping with Playwright: {e}")
 
-    return resultados, partidos, standings, noticias
+    return resultados, partidos, standings
 
 def main():
     metadata = {
@@ -162,12 +136,11 @@ def main():
     }
 
     print("Starting Flashscore Playwright Extra Scraper...")
-    resultados, partidos, standings, noticias = extract_flashscore_data()
+    resultados, partidos, standings = extract_flashscore_data()
 
     save_json("resultados", {"response": resultados})
     save_json("partidos", {"response": partidos})
     save_json("standings", {"response": [{"league": {"standings": [standings]}}]})
-    save_json("news", noticias)
     save_json("metadata", metadata)
 
     print("Scraping update complete.")
