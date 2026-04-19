@@ -1,6 +1,14 @@
 {
   "response": [
     {
+      "dateStr": "19.04. 14:00",
+      "home": "Arenteiro",
+      "away": "AD Mérida",
+      "score_home": "0",
+      "score_away": "2",
+      "status": "FT"
+    },
+    {
       "dateStr": "12.04. 16:15",
       "home": "AD Mérida",
       "away": "Tenerife",
@@ -150,14 +158,6 @@
       "away": "AD Mérida",
       "score_home": "2",
       "score_away": "2",
-      "status": "FT"
-    },
-    {
-      "dateStr": "22.11.2025",
-      "home": "AD Mérida",
-      "away": "Real Avilés",
-      "score_home": "2",
-      "score_away": "1",
       "status": "FT"
     }
   ]
