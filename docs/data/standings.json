@@ -367,8 +367,32 @@
             {
               "rank": 16,
               "team": {
-                "name": "Guadalajara",
+                "name": "CF Talavera",
                 "id": 16
+              },
+              "points": 40,
+              "stats": {
+                "pj": "36",
+                "g": "10",
+                "e": "10",
+                "p": "16",
+                "goals": "35:44",
+                "diff": "-9"
+              },
+              "form": [
+                "?",
+                "G",
+                "P",
+                "E",
+                "P",
+                "G"
+              ]
+            },
+            {
+              "rank": 17,
+              "team": {
+                "name": "Guadalajara",
+                "id": 17
               },
               "points": 40,
               "stats": {
@@ -389,10 +413,10 @@
               ]
             },
             {
-              "rank": 17,
+              "rank": 18,
               "team": {
                 "name": "Ourense CF",
-                "id": 17
+                "id": 18
               },
               "points": 39,
               "stats": {
@@ -413,40 +437,16 @@
               ]
             },
             {
-              "rank": 18,
-              "team": {
-                "name": "CF Talavera",
-                "id": 18
-              },
-              "points": 39,
-              "stats": {
-                "pj": "35",
-                "g": "10",
-                "e": "9",
-                "p": "16",
-                "goals": "35:44",
-                "diff": "-9"
-              },
-              "form": [
-                "?",
-                "G",
-                "P",
-                "E",
-                "P",
-                "G"
-              ]
-            },
-            {
               "rank": 19,
               "team": {
                 "name": "Osasuna B",
                 "id": 19
               },
-              "points": 36,
+              "points": 37,
               "stats": {
-                "pj": "35",
+                "pj": "36",
                 "g": "9",
-                "e": "9",
+                "e": "10",
                 "p": "17",
                 "goals": "25:39",
                 "diff": "-14"
